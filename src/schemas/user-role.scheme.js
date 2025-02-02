@@ -1,30 +1,29 @@
-import { DataTypes, Sequelize } from "sequelize";
+import { DataTypes } from "sequelize";
+import  sequelize  from "../config/database.config.js";
+import { User } from "./user.scheme.js";
+import { Role } from "./role.scheme.js";
 
-export const UserRole = (Sequelize, DataTypes) => {
-    const UserRole = Sequelize.define('UserRole', {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-        },
-        userId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            //aqui se hace la referencia a la tabla que estoy llamando
-            reference: {
-                model: 'User',
-                key: 'id'
-            }
-        },
-        roleId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            //aqui se hace la referencia a la tabla que estoy llamando
-            reference: {
-                model: 'Role',
-                key: 'id'
-            }
-        },
-    });
-    return UserRole;
-}
+export const UserRole = sequelize.define(
+  "UserRole",
+  {
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: User,
+        key: "id",
+      },
+    },
+    roleId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Role,
+        key: "id",
+      },
+    },
+  },
+  {
+    tableName: "user_roles",
+  }
+);

@@ -11,14 +11,14 @@ const sequelize = new Sequelize(
   }
 );
 
-sequelize
-  .authenticate()
-  .then(async () => {
+export const initDB = async () => {
+  try {
+    await sequelize.authenticate();
     console.log("Conexión con la base de datos establecida ❤️");
     await sequelize.sync({ alter: true });
-  })
-  .catch((error) => {
+  } catch (error) {
     console.log(error);
-  });
+  }
+};
 
 export default sequelize;
