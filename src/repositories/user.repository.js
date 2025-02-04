@@ -6,4 +6,13 @@ export class UserRepository extends BaseRepository {
         super(User)
     }
 
+    async getAllActivceUsers () {
+        // logica para obntener usuarios activos
+        
+    }
+
+    // obtener todos los usuarios que se encuentren activos en la plataforma 
+
+
+
 }
