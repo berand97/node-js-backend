@@ -1,30 +1,28 @@
-import { UserModel } from "../models/user.model.js";
+import AuthService from "../services/authentication.service.js";
+import { userResponseDTO } from "../utils/dto/user.dto.js";
 
-export class AuthenticationController {
-  static async getAllUsers(request, response) {
+class AuthenticationController {
+    login = async (req, res) => {
+        try {
+            const { email, password } = req.body;
+            const { user, accessToken, refreshToken, error } = await AuthService.authenticateUser(email, password);
 
-    const users = await UserModel.getAllUsers();
+            if (error) {
+                return res.status(401).json({ message: error });
+            }
 
-    if(users.length === 0) {
-      return response.status(404).json({ error: "No hay usuarios registrados" });
-    }
+            AuthService.setAuthCookies(res, accessToken, refreshToken);
 
-    return response.status(200).json({
-      message: "Lista de usuarios",
-      users: users,
-    });
-  }
+            return res.status(200).json({
+                message: "Inicio de sesión exitoso.",
+                user: userResponseDTO(user)
+            });
 
-
-  static async login(request, response) {
-    const { user, password } = request.body;
-
-    const validations = UserModel.validateFields(user, password);
-
-    if (!validations.isValid) {
-      return response.status(400).json({ error: validations.errors });
-    }
-
-    response.json({ message: "Usuario registrado" });
-  }
+        } catch (error) {
+            console.error("Error en el login:", error);
+            return res.status(500).json({ message: "Error en la autenticación." });
+        }
+    };
 }
+
+export default new AuthenticationController();

@@ -1,5 +1,5 @@
-import { DataTypes } from "sequelize";
 import sequelize from "../config/database.config.js";
+import { DataTypes } from "sequelize";
 
 export const Role = sequelize.define("Role", {
   id: {
@@ -15,4 +15,6 @@ export const Role = sequelize.define("Role", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+}, {
+  tableName: "roles",
 });

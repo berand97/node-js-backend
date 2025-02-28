@@ -1,10 +1,14 @@
 import express from "express";
-import { AuthenticationController } from "../controllers/authentication.controller.js";
+import authenticationController from "../controllers/authentication.controller.js";
+import { loginValidators } from "../utils/validators/authentication.validator.js";
+import validateRequest from "../middlewares/validate-request.js";
 
 const router = express.Router();
 
-router.get("/", AuthenticationController.getAllUsers );
+router.post("/",
+    loginValidators,
+    validateRequest,
+    authenticationController.login);
 
 
 export default router;
- 

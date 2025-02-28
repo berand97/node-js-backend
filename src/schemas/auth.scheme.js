@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.config.js';
 import { User } from './user.scheme.js';
 
-export const Auth = sequelize.define("Auth", {
+export const Auth = sequelize.define("Authentication", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -24,4 +24,8 @@ export const Auth = sequelize.define("Auth", {
         type: DataTypes.DATE,
         allowNull: false,
     },
-});
+},
+    {
+        tableName: 'authentications',
+    }
+);

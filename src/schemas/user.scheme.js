@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.config.js";
+import { Role } from "./role.scheme.js";
 
 export const User = sequelize.define("User", {
   id: {
@@ -18,6 +19,7 @@ export const User = sequelize.define("User", {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
   password: {
     type: DataTypes.STRING,
@@ -26,5 +28,11 @@ export const User = sequelize.define("User", {
   roleId: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    references: {
+      model: Role,
+      key: "id",
+    },
   },
+}, {
+  tableName: "users",
 });

@@ -1,7 +1,7 @@
-import { DataTypes } from 'sequelize';
 import sequelize from "../config/database.config.js";
+import { DataTypes } from "sequelize";
 
-export const Department = sequelize.define("Department", {
+export const Space = sequelize.define("Space", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -10,9 +10,17 @@ export const Department = sequelize.define("Department", {
     name: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
     },
-    description: {
-        type: DataTypes.STRING,
+    capacity: {
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
-});
+    description: {
+        type: DataTypes.TEXT,
+    },
+},
+    {
+        tableName: "spaces"
+    }
+);
